@@ -22,8 +22,6 @@ def run(plan, args):
     if ENV_VARS_ARG_NAME in args:
         env_vars = args[ENV_VARS_ARG_NAME]
 
-    plan.print(env_vars)
-
     #Add a mongo db server
     mongo_db_service = plan.add_service(
         name="mongoDB",
