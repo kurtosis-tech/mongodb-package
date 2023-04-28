@@ -1,0 +1,8 @@
+{
+  "MONGO_DB_IMAGE_TAG": "mongo:6.0.5",
+  "MONGO_DB_PORT_NUMBER": 27017,
+  "env_vars": {
+    "MONGO_INITDB_ROOT_USERNAME": "root",
+    "MONGO_INITDB_ROOT_PASSWORD": "example",
+  }
+}
