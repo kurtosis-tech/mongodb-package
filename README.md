@@ -19,11 +19,31 @@ To blow away the created [enclave][enclaves-reference], run `kurtosis clean -a`.
 <details>
     <summary>Click to see configuration</summary>
 
-You can configure this package using a JSON structure as the provided arguments. 
-You can either provide the arguments manually 
+You can configure this package using a JSON structure as an argument to the `kurtosis run` function. The full structure that this package accepts are as follows, with default values shown (note that the `//` lines are not valid JSON and should be removed!):
+
+```javascript
+{
+    // The name to give the new Mongo service
+    "name": "mongoDB",
+
+    // The image to run
+    "image": "mongo:6.0.5",
+
+    // The user that will be created
+    "user": "root",
+
+    // The password of the user that will be created
+    "password": "password",
+
+    // Additional environment variables that will be set on the Mongo container
+    "env_vars": {}
+}
+```
+
+These arguments can either be provided manually:
 
 ```bash
-kurtosis run github.com/kurtosis-tech/mongodb-package '{"MONGO_DB_IMAGE_TAG":"mongo:6.0.5"}'
+kurtosis run github.com/kurtosis-tech/mongodb-package '{"image":"mongo:latest"}'
 ```
 
 or by loading via a file, for instance using the [args.json](args.json) file in this repo:
@@ -31,7 +51,6 @@ or by loading via a file, for instance using the [args.json](args.json) file in 
 ```bash
 kurtosis run github.com/kurtosis-tech/mongodb-package --enclave mongo "$(cat args.json)"
 ```
-
 
 </details>
 
