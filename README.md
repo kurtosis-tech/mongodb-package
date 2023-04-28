@@ -1,14 +1,13 @@
-My Package
+MongoDB Package
 ============
-This is a [Kurtosis package](https://docs.kurtosis.com/concepts-reference/packages). It doesn't do much now, but it will soon!
+This is a MongoDB [Kurtosis package](https://docs.kurtosis.com/concepts-reference/packages).
 
 Run this package
 ----------------
 Open [the Kurtosis playground](https://gitpod.io/#/https://github.com/kurtosis-tech/playground-gitpod) and run:
 
-<!-- TODO replace YOURUSER and THISREPO with the correct values -->
 ```bash
-kurtosis run github.com/YOURUSER/THISREPO
+kurtosis run github.com/kurtosis-tech/mongodb-package
 ```
 
 To run it locally, [install Kurtosis][install-kurtosis] and run the same.
@@ -20,21 +19,19 @@ To blow away the created [enclave][enclaves-reference], run `kurtosis clean -a`.
 <details>
     <summary>Click to see configuration</summary>
 
-<!-- You can parameterize your package as you prefer; see https://docs.kurtosis.com/next/concepts-reference/args for more -->
-You can configure this package using the following JSON structure:
+You can configure this package using a JSON structure as the provided arguments. 
+You can either provide the arguments manually 
 
-```javascript
-{
-    "name": "John Snow"
-}
-```
-
-For example:
-
-<!-- TODO replace YOURUSER and THISREPO with the correct values -->
 ```bash
-kurtosis run github.com/YOURUSER/THISREPO '{"name":"Maynard James Keenan"}'
+kurtosis run github.com/kurtosis-tech/mongodb-package '{"MONGO_DB_IMAGE_TAG":"mongo:6.0.5"}'
 ```
+
+or by loading via a file, for instance using the [args.json](args.json) file in this repo:
+
+```bash
+kurtosis run github.com/kurtosis-tech/mongodb-package --enclave mongo "$(cat args.json)"
+```
+
 
 </details>
 
@@ -42,14 +39,13 @@ Use this package in your package
 --------------------------------
 Kurtosis packages can be composed inside other Kurtosis packages. To use this package in your package:
 
-<!-- TODO Replace YOURUSER and THISREPO with the correct values! -->
 First, import this package by adding the following to the top of your Starlark file:
 
 ```python
-this_package = import_module("github.com/YOURUSER/THISREPO/main.star")
+this_package = import_module("github.com/kurtosis-tech/mongodb-package/main.star")
 ```
 
-Then, call the this package's `run` function somewhere in your Starlark script:
+Then, call this package's `run` function somewhere in your Starlark script:
 
 ```python
 this_package_output = this_package.run(plan, args)

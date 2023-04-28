@@ -1,18 +1,42 @@
-# NOTE: If you're a VSCode user, you might like our VSCode extension: https://marketplace.visualstudio.com/items?itemName=Kurtosis.kurtosis-extension
+MONGO_DB_PROTOCOL_NAME = "mongodb"
+MONGO_DB_PORT_ID = "mongodb"
 
-# For more information on...
-#  - the 'run' function:  https://docs.kurtosis.com/concepts-reference/packages#runnable-packages
-#  - the 'plan' object:   https://docs.kurtosis.com/starlark-reference/plan
-#  - the 'args' object:   https://docs.kurtosis.com/next/concepts-reference/args
+MONGO_DB_DEFAULT_PORT_NUMBER = 27017
+MONGO_DB_PORT_NUMBER_ARG = "MONGO_DB_PORT_NUMBER"
+
+MONGO_DB_DEFAULT_IMAGE_TAG = "mongo:6.0.5"
+MONGO_DB_IMAGE_TAG_ARG = "MONGO_DB_IMAGE_TAG"
+
+ENV_VARS_ARG_NAME = "env_vars"
+
 def run(plan, args):
-    args = override_default_args(args)
-    plan.print("Hello, " + args["name"])
+    mongo_db_image = MONGO_DB_DEFAULT_IMAGE_TAG
+    if MONGO_DB_IMAGE_TAG_ARG in args:
+        mongo_db_image = args[MONGO_DB_IMAGE_TAG_ARG]
 
+    mongo_db_port_number = MONGO_DB_DEFAULT_PORT_NUMBER
+    if MONGO_DB_PORT_NUMBER_ARG in args:
+        mongo_db_port_number = args[MONGO_DB_PORT_NUMBER_ARG]
 
-def override_default_args(args):
-    default_args = {
-        "name": "John Snow"
-    }
+    env_vars = {}
+    if ENV_VARS_ARG_NAME in args:
+        env_vars = args[ENV_VARS_ARG_NAME]
 
-    # See https://github.com/bazelbuild/starlark/blob/master/spec.md for all the cool stuff you can do in Starlark
-    return default_args | args
+    plan.print(env_vars)
+
+    #Add a mongo db server
+    mongo_db_service = plan.add_service(
+        name="mongoDB",
+        config=ServiceConfig(
+            image=mongo_db_image,
+            ports={
+                MONGO_DB_PORT_ID: PortSpec(
+                    number=mongo_db_port_number,
+                    application_protocol=MONGO_DB_PROTOCOL_NAME
+                ),
+            },
+            env_vars=env_vars
+        ),
+    )
+
+    return mongo_db_service
