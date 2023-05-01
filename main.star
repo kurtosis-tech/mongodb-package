@@ -28,7 +28,7 @@ def run(plan, args):
             image=image,
             ports={
                 PORT_NAME: PortSpec(
-                    number=27017,
+                    number=PORT_NUMBER,
                     application_protocol=PROTOCOL_NAME
                 ),
             },
