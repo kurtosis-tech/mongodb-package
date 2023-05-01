@@ -32,7 +32,7 @@ def run(plan, args):
                     application_protocol=PROTOCOL_NAME
                 ),
             },
-            env_vars=env_var_overrides,
+            env_vars=env_vars,
         ),
     )
 
