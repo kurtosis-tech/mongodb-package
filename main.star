@@ -9,7 +9,7 @@ PORT_NUMBER = 27017
 PROTOCOL_NAME = "mongodb"
 
 def run(plan, args):
-    service_name = args.get(NAME_ARG, "mongoDB")
+    service_name = args.get(NAME_ARG, "mongodb")
     image = args.get(IMAGE_ARG, "mongo:6.0.5")
     user = args.get(USER_ARG, "root")
     password = args.get(PASSWORD_ARG, "password")
