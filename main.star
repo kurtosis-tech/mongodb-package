@@ -26,6 +26,9 @@ def run(plan, args):
         name=service_name,
         config=ServiceConfig(
             image=image,
+            files = {
+                "/data/db": Directory(persistent_key="mongodb-data"),
+            },
             ports={
                 PORT_NAME: PortSpec(
                     number=PORT_NUMBER,
